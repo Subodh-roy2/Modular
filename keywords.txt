@@ -1,0 +1,95 @@
+#######################################
+# Syntax Coloring Map Modular Kits
+# by LearningBIX
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+Modular	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+boardLed KEYWORD2
+sonarBegin KEYWORD2
+sonarRead KEYWORD2
+proximityOneBegin KEYWORD2
+proximityOneRead KEYWORD2
+proximityTwoBegin KEYWORD2
+proximityTwoRead KEYWORD2
+steerBotBegin KEYWORD2
+steerBotForward KEYWORD2
+steerBotBackward KEYWORD2
+steerBotLeftAxial KEYWORD2
+steerBotRightAxial KEYWORD2
+steerBotLeftCurve KEYWORD2
+steerBotRightCurve KEYWORD2
+haltBot KEYWORD2
+motorOneBegin KEYWORD2
+motorOneRotateClockwise KEYWORD2
+motorOneRotateAntiClockwise KEYWORD2
+motorOneHalt KEYWORD2
+motorTwoBegin KEYWORD2
+motorTwoRotateClockwise KEYWORD2
+motorTwoRotateAntiClockwise KEYWORD2
+motorTwoHalt KEYWORD2
+servoOneBegin KEYWORD2
+servoOneMove KEYWORD2
+servoTwoBegin KEYWORD2
+servoTwoMove KEYWORD2
+servoThreeBegin KEYWORD2
+servoThreeMove KEYWORD2
+servoFourBegin KEYWORD2
+servoFourMove KEYWORD2
+buzzerBegin KEYWORD2
+buzzerSet KEYWORD2
+rgbBegin KEYWORD2
+rgbSetRed KEYWORD2
+rgbSetBlue KEYWORD2
+rgbSetGreen KEYWORD2
+bluetoothBegin KEYWORD2
+bluetoothWrite KEYWORD2
+bluetoothRead KEYWORD2
+bluetoothCheck KEYWORD2
+clearPort KEYWORD2
+usbBegin KEYWORD2
+usbRead KEYWORD2
+usbWrite KEYWORD2
+usbPrint KEYWORD2
+usbPrintln KEYWORD2
+usbCheck KEYWORD2
+pumpSet KEYWORD2
+pumpBegin KEYWORD2
+relayBegin KEYWORD2
+relaySet KEYWORD2
+switchBegin KEYWORD2
+switchRead KEYWORD2
+moistBegin KEYWORD2
+moistRead KEYWORD2
+lightBegin KEYWORD2
+lightRead KEYWORD2
+soundBegin KEYWORD2
+soundRead KEYWORD2
+dhtBegin KEYWORD2
+tempRead KEYWORD2
+humidityRead KEYWORD2
+motionBegin KEYWORD2
+accXRead KEYWORD2
+accYRead KEYWORD2
+accZRead KEYWORD2
+gyroXRead KEYWORD2
+gyroYRead KEYWORD2
+gyroZRead KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+CA LITERAL1 Constants
+CC LITERAL1 Constants
+newLine LITERAL1 Constants
+setOn LITERAL1 Constants
+setOff LITERAL1 Constants
