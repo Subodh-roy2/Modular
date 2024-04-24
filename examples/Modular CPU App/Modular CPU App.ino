@@ -1,4 +1,5 @@
 /*
+
    designed for Atmega328p/atmega168p based boards
 */
 
@@ -8,7 +9,7 @@
 #include <NeoSWSerial.h>
 #include <Servo.h>
 
-#define SERIAL_DEBUG //if define, the pins 0 and 1 will be used for serial communcation
+//#define SERIAL_DEBUG //if define, the pins 0 and 1 will be used for serial communcation
 
 //create ultrasonic object
 Ultrasonic ultrasonic;
@@ -47,21 +48,21 @@ void move_motor2_aclkwise();
 void motor2_stop();
 void play_line_follower();
 void stop_line_follower();
-
+int p[4] = {1, 4, 7, 8};
 void setup() {
-#ifdef SERIAL_DEBUG //use pins 0 and 1 for serial debugging 
-  Serial.begin(115200);
-#else //else use pins for led
-  pinMode(BOARD_LED1, OUTPUT);
-  pinMode(BOARD_LED2, OUTPUT);
-#endif
+  //#ifdef SERIAL_DEBUG //use pins 0 and 1 for serial debugging
+  //  Serial.begin(115200);
+  //#else //else use pins for led
+  //  pinMode(BOARD_LED1, OUTPUT);
+  //  pinMode(BOARD_LED2, OUTPUT);
+  //#endif
   bluetooth_Serial.begin(SOFT_RX, SOFT_TX);
   ultrasonic.begin(SONAR_SENSOR_TRIG, SONAR_SENSOR_ECHO);
   //define digital input, output pins
-  pinMode(BOARD_LED3, OUTPUT);
-  pinMode(BOARD_LED4, OUTPUT);
-  pinMode(BOARD_LED5, OUTPUT);
-  pinMode(BOARD_LED6, OUTPUT);
+  //  pinMode(BOARD_LED3, OUTPUT);
+  //  pinMode(BOARD_LED4, OUTPUT);
+  //  pinMode(BOARD_LED5, OUTPUT);
+  //  pinMode(BOARD_LED6, OUTPUT);
 
   //define bot driving motor pins
   pinMode(MOTOR_LEFT_1, OUTPUT);
@@ -70,31 +71,48 @@ void setup() {
   pinMode(MOTOR_RIGHT_2, OUTPUT);
 
   //define PORT3 pins as output by default
-  pinMode(3, OUTPUT);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(9, OUTPUT);
+  //  pinMode(3, OUTPUT);
+  //  pinMode(5, OUTPUT);
+  //  pinMode(6, OUTPUT);
+  //  pinMode(9, OUTPUT);
+  //
+  //  digitalWrite(3, LOW);
+  //  digitalWrite(5, LOW);
+  //  digitalWrite(6, LOW);
+  //  digitalWrite(9, LOW);
 
-  digitalWrite(3, LOW);
-  digitalWrite(5, LOW);
-  digitalWrite(6, LOW);
-  digitalWrite(9, LOW);
 
-
-  for (int i = 0; i < 5; i++) {
-    digitalWrite(BOARD_LED3, HIGH);
-    digitalWrite(BOARD_LED4, HIGH);
-    digitalWrite(BOARD_LED5, HIGH);
-    digitalWrite(BOARD_LED6, HIGH);
-    delay(200);
-    digitalWrite(BOARD_LED3, LOW);
-    digitalWrite(BOARD_LED4, LOW);
-    digitalWrite(BOARD_LED5, LOW);
-    digitalWrite(BOARD_LED6, LOW);
-    delay(200);
+  //  for (int i = 0; i < 5; i++) {
+  //    digitalWrite(BOARD_LED3, HIGH);
+  //    digitalWrite(BOARD_LED4, HIGH);
+  //    digitalWrite(BOARD_LED5, HIGH);
+  //    digitalWrite(BOARD_LED6, HIGH);
+  //    delay(200);
+  //    digitalWrite(BOARD_LED3, LOW);
+  //    digitalWrite(BOARD_LED4, LOW);
+  //    digitalWrite(BOARD_LED5, LOW);
+  //    digitalWrite(BOARD_LED6, LOW);
+  //    delay(200);
+  //  }
+  for (int i = 0; i <= 3; i++) {
+    pinMode(p[i], OUTPUT);
   }
-
-
+  on(0);
+  for (int a = 0; a < 3; a++) {
+    on3(1);
+    on3(0);
+  }
+  for (int a = 0; a < 3; a++) {
+    on2(1);
+    on2(0);
+  }
+  for (int a = 0; a < 20; a++) {
+    on(1);
+    delay(50);
+    on(0);
+    delay(50);
+  }
+//  digitalWrite(p[0], 1);
 }
 
 //flags to check if pins has been attached to servo
@@ -108,9 +126,9 @@ void loop() {
   //check if a command is received
   if (bluetooth_Serial.available() > 0) {
     serial_cmd = bluetooth_Serial.read();
-#ifdef SERIAL_DEBUG
-    Serial.println(serial_cmd, HEX);
-#endif
+    //#ifdef SERIAL_DEBUG
+    //    Serial.println(serial_cmd, HEX);
+    //#endif
     switch (serial_cmd) {
       case BOARD_LED_1_OFF :
         digitalWrite(BOARD_LED1, HIGH);
@@ -294,9 +312,9 @@ void loop() {
         distance = ultrasonic.read();
         distance = constrain(distance, 0, 255);
         bluetooth_Serial.write(distance & 0xff);
-#ifdef SERIAL_DEBUG
-        Serial.println(distance & 0xff);
-#endif
+        //#ifdef SERIAL_DEBUG
+        //        Serial.println(distance & 0xff);
+        //#endif
         break;
       case PROXIMITY_ONE_READ :
         //read proximity 1 sensor
@@ -317,7 +335,7 @@ void loop() {
           attach_servo_4 = 0;
         }
         else;
-        digitalWrite(BUZZER, HIGH);
+        analogWrite(BUZZER, 255);
         break;
       case BUZZER_OFF :
         if (attach_servo_4) {
@@ -326,7 +344,7 @@ void loop() {
           attach_servo_4 = 0;
         }
         else;
-        digitalWrite(BUZZER, LOW);
+        analogWrite(BUZZER, 0);
         break;
       case RED_LED_COLOR :
         if (attach_servo_1) {
@@ -339,6 +357,7 @@ void loop() {
         //read red colour value
         serial_cmd = bluetooth_Serial.read();
         serial_cmd = constrain(serial_cmd, 0, 255);
+        serial_cmd = map(serial_cmd, 0, 255, 255, 0);
         analogWrite(RGB_RED, serial_cmd);
         break;
       case GREEN_LED_COLOR :
@@ -486,4 +505,21 @@ void play_line_follower() {
 
 void stop_line_follower() {
   bot_stop();
+}
+void on(int x) {
+  for (int i = 0; i <= 3; i++) {
+    digitalWrite(p[i], x);
+  }
+}
+void on2(int x) {
+  for (int i = 0; i <= 3; i++) {
+    digitalWrite(p[i], x);
+    delay(50);
+  }
+}
+void on3(int x) {
+  for (int i = 3; i >= 0; i--) {
+    digitalWrite(p[i], x);
+    delay(50);
+  }
 }
